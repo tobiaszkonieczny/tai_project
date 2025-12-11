@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Resource id="jdbc/bazaTestowaMSSQL" type="javax.sql.DataSource">#Wed Nov 12 12:26:42 CET 2025
+password=tomcat
+jdbcDriver=com.microsoft.sqlserver.jdbc.SQLServerDriver
+jdbcUrl=jdbc\:sqlserver\://155.158.112.12\:1433;databaseName\=tomcat
+userName=tomcatuser
+</Resource>
+</resources>

@@ -1,2 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/project_tai"/>
+<Context antiResourceLocking="true" path="/project_tai">
+     <Realm    localDataSource="false" className="org.apache.catalina.realm.DataSourceRealm"
+            dataSourceName="jdbc/authority"
+            userTable="users" userNameCol="user_name" userCredCol="user_pass"
+            userRoleTable="user_roles" roleNameCol="role_name"/>
+    </Context>

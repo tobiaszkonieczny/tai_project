@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    <title>Login</title>
+    <h:outputStylesheet library="css" name="styles.css"/>
+</h:head>
+
+<h:body>
+<div class="container">
+    <div class="login-card alt-card-style">
+        <h2 class="login-title">Logowanie</h2>
+        <h:form p:method="post" p:action="j_security_check">
+            <div class="form-group">
+                <label for="j_username">Nazwa użytkownika</label>
+                <h:inputText p:name="j_username"
+                             id="j_username"
+                             styleClass="login-input input-field"/>
+            </div>
+            <div class="form-group">
+                <label for="j_password">Hasło</label>
+                <h:inputSecret p:name="j_password"
+                               id="j_password"
+                               styleClass="login-input input-field"/>
+            </div>
+            <div class="form-group center">
+                <input type="submit"
+                       value="Zaloguj się"
+                       class="login-btn primary-btn"/>
+            </div>
+        </h:form>
+    </div>
+</div>
+</h:body>
+</html>
