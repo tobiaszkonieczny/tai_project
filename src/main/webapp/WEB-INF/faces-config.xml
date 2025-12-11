@@ -3,17 +3,38 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    
+        <application>
+        <resource-bundle>
+            <base-name>messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+        <locale-config>
+            <default-locale>pl</default-locale>
+            <supported-locale>pl</supported-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+    </application>
 
     <managed-bean>
-        <description>Komponent konfigurowany w pliku faces-config</description>
+        <description>Komponent session-scoped konfigurowany w pliku faces-config</description>
         <managed-bean-name>applicationControllerXML</managed-bean-name>
-        <managed-bean-class>com.tai.project_tai.controllers.applicationControllerXML</managed-bean-class>
-        <managed-bean-scope>application</managed-bean-scope>
+        <managed-bean-class>com.tai.project_tai.controllers.ApplicationControllerXML</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
 
         <managed-property>
             <property-name>student</property-name>
             <value>Konieczny Tobiasz</value>
         </managed-property>
     </managed-bean>
+    <navigation-rule>
+        <description>Navigation Rule</description>
+        <display-name>Nazwa wyświetlana</display-name>
+        <navigation-case>
+            <from-outcome>translationAlias</from-outcome>
+            <to-view-id>/views/translation.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
 
 </faces-config>

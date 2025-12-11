@@ -1,0 +1,21 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 11 gru 2025, 23:59:57
+    Author     : tobia
+*/
+
+
+/* --- Demo i18n (druga strona) --- */
+h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+p {
+    color: #555555;
+    font-size: 1em;
+    line-height: 1.5;
+}
