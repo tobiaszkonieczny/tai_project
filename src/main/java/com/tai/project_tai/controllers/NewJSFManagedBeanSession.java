@@ -5,7 +5,7 @@ import com.tai.project_tai.entity.TUzytkownik;
 import com.tai.project_tai.to.UserTO;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections; // Dodano do sortowania
+import java.util.Collections; 
 import java.util.Comparator;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -90,7 +90,7 @@ public class NewJSFManagedBeanSession implements Serializable {
         TUzytkownikJpaController daneDao = new TUzytkownikJpaController(userTransaction, emf);
         
         Long id = System.currentTimeMillis();
-        TUzytkownik uzytkownik = new TUzytkownik(id, "", ""); 
+        TUzytkownik uzytkownik = new TUzytkownik(id, "Nowe", "Imie"); 
         
         try{
             daneDao.create(uzytkownik);
