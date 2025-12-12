@@ -6,7 +6,7 @@ import com.tai.project_tai.to.UserTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections; 
-import java.util.Comparator;
+import java.util.Comparator; 
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -14,41 +14,39 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-import javax.persistence.EntityManager;
+import javax.persistence.PersistenceUnit;
 import javax.transaction.UserTransaction;
 
 @Named(value = "newJSFManagedBeanSession")
 @SessionScoped
 public class NewJSFManagedBeanSession implements Serializable {
-    
 
-    @PersistenceContext(unitName="project_tai")
-    private EntityManager entityManager;
-    
+
+    @PersistenceUnit(unitName = "project_tai")
+    private transient EntityManagerFactory emf; //transient ensures, that when everything is saved on disk, EM is not 
+
     @Resource
-    private UserTransaction userTransaction;
-    
-    private List<UserTO> userToList = new ArrayList<>();
-    
+    private transient UserTransaction userTransaction;
+
+    private List<UserTO> userToList = new ArrayList<UserTO>(); 
+
     public NewJSFManagedBeanSession() {
     }
- 
+
     @PostConstruct
     public void refreshData() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("project_tai");
-        TUzytkownikJpaController daneDao = new TUzytkownikJpaController(userTransaction, emf);
         
+        TUzytkownikJpaController daneDao = new TUzytkownikJpaController(userTransaction, emf);
+
         List<TUzytkownik> uzytkownikToListLokal = daneDao.findTUzytkownikEntities();
         if (uzytkownikToListLokal != null) {
             userToList.clear();
-            for (TUzytkownik uzytkownik: uzytkownikToListLokal) {
+            for (TUzytkownik uzytkownik : uzytkownikToListLokal) {
                 userToList.add(new UserTO(uzytkownik.getId(), uzytkownik.getImie(), uzytkownik.getNazwisko(), false));
             }
         }
     }
-    
+
     public List<UserTO> getUserToList() {
         return userToList;
     }
@@ -56,60 +54,59 @@ public class NewJSFManagedBeanSession implements Serializable {
     public void setUserToList(List<UserTO> userToList) {
         this.userToList = userToList;
     }
-    
+
     public void visibleChange(UserTO userTO) {
         if (!userTO.isEdited()) {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("project_tai");
             TUzytkownikJpaController daneDao = new TUzytkownikJpaController(userTransaction, emf);
-            try{
+            try {
                 TUzytkownik encja = new TUzytkownik(userTO.getId(), userTO.getImie(), userTO.getNazwisko());
                 daneDao.edit(encja);
-                
+
                 int index = userToList.indexOf(userTO);
-                if(index != -1) userToList.set(index, userTO);
-                
-            } catch(Exception ex) {
+                if (index != -1) {
+                    userToList.set(index, userTO);
+                }
+
+            } catch (Exception ex) {
                 sendJSFErrorMesssage(ex);
             }
         }
     }
-    
-    public void deleteRow (UserTO userTO) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("project_tai");
+
+    public void deleteRow(UserTO userTO) {
         TUzytkownikJpaController daneDao = new TUzytkownikJpaController(userTransaction, emf);
-        try{
+        try {
             daneDao.destroy(userTO.getId());
             userToList.remove(userTO);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             sendJSFErrorMesssage(ex);
         }
     }
-    
-    public void addRow (UserTO userTO) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("project_tai");
+
+    public void addRow(UserTO userTO) {
         TUzytkownikJpaController daneDao = new TUzytkownikJpaController(userTransaction, emf);
-        
+
         Long id = System.currentTimeMillis();
-        TUzytkownik uzytkownik = new TUzytkownik(id, "Nowe", "Imie"); 
-        
-        try{
+        TUzytkownik uzytkownik = new TUzytkownik(id, "Nowe", "Imie");
+
+        try {
             daneDao.create(uzytkownik);
-            
+
             int index = userToList.indexOf(userTO);
-            UserTO noweTO = new UserTO(id, "Nowe", "Imie", true); 
-            
-            if(index != -1 && index < userToList.size()) {
+            UserTO noweTO = new UserTO(id, "Nowe", "Imie", true);
+
+            if (index != -1 && index < userToList.size()) {
                 userToList.add(index + 1, noweTO);
             } else {
                 userToList.add(noweTO);
             }
-            
-        } catch(Exception ex) {
+
+        } catch (Exception ex) {
             sendJSFErrorMesssage(ex);
         }
     }
-    
-    public void sortAsc() {        
+
+    public void sortAsc() {
         Collections.sort(userToList, new Comparator<UserTO>() {
             @Override
             public int compare(UserTO a, UserTO b) {
@@ -120,22 +117,23 @@ public class NewJSFManagedBeanSession implements Serializable {
         });
     }
 
-    public void sortDesc() {        
+    public void sortDesc() {
         Collections.sort(userToList, new Comparator<UserTO>() {
             @Override
             public int compare(UserTO a, UserTO b) {
                 String valA = a.getNazwisko() != null ? a.getNazwisko() : "";
                 String valB = b.getNazwisko() != null ? b.getNazwisko() : "";
+                // Odwrócona kolejność porównania (B do A) dla sortowania malejącego
                 return valB.compareToIgnoreCase(valA);
             }
         });
     }
-    
+
     public void sendJSFErrorMesssage(Exception ex) {
         javax.faces.context.FacesContext facesContext = javax.faces.context.FacesContext.getCurrentInstance();
         if (facesContext != null) {
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Błąd", ex.getMessage()));
         }
-        ex.printStackTrace(); 
+        ex.printStackTrace();
     }
 }
