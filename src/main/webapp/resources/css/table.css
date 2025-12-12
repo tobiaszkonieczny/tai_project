@@ -1,0 +1,143 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 12 gru 2025, 01:02:44
+    Author     : tobia
+*/
+
+body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background: #eef1f5;
+    margin: 0;
+    padding: 0;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.table-inner {
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+    width: 90%;
+    max-width: 850px;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.user-table th,
+.user-table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.user-table th {
+    background: #4b79e0;
+    color: #fff;
+    font-weight: 600;
+    border-bottom: 2px solid #3a63b5;
+}
+
+.row-odd {
+    background: #f8f9fc;
+}
+
+.row-even {
+    background: #ffffff;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sort-controls {
+    display: flex;
+    gap: 4px;
+}
+
+.icon-btn {
+    background: #e3e7ee;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.icon-btn:hover {
+    background: #d1d5df;
+}
+
+.icon-btn.small {
+    font-size: 14px;
+}
+
+.add-btn {
+    background: #4caf50;
+    color: white;
+}
+
+.add-btn:hover {
+    background: #449a48;
+}
+
+.del-btn {
+    background: #e74c3c;
+    color: white;
+}
+
+.del-btn:hover {
+    background: #cc3f32;
+}
+
+.cell-input {
+    width: 85%;
+    padding: 6px;
+    border: 1px solid #bfc5d0;
+    border-radius: 6px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.error-msg {
+    color: #d9534f;
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.actions-bottom {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.panel-link {
+    background: #4b79e0;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.panel-link:hover {
+    background: #3a63b5;
+}
