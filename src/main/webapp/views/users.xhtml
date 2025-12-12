@@ -1,96 +1,96 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
 
-<h:head>
-    <title>Tabela użytkowników</title>
-    <h:outputStylesheet library="css" name="table.css"/>
-</h:head>
+    <h:head>
+        <title>Tabela użytkowników</title>
+        <h:outputStylesheet library="css" name="table.css"/>
+    </h:head>
 
-<h:body>
+    <h:body>
 
-<div class="table-container">
+        <div class="table-container">
 
-    <h:form>
+            <h:form>
 
-        <div class="table-inner">
+                <div class="table-inner">
 
-            <h:dataTable value="#{newJSFManagedBeanSession.userToList}"
-                         var="userToList"
-                         styleClass="user-table"
-                         rowClasses="row-odd,row-even">
+                    <h:dataTable value="#{newJSFManagedBeanSession.userToList}"
+                                 var="userToList"
+                                 styleClass="user-table"
+                                 rowClasses="row-odd,row-even">
 
-                <h:column>
-                    <f:facet name="header">ID</f:facet>
-                    <h:outputText value="#{userToList.id}"/>
-                </h:column>
+                        <h:column>
+                            <f:facet name="header">ID</f:facet>
+                            <h:outputText value="#{userToList.id}"/>
+                        </h:column>
 
-                <h:column>
-                    <f:facet name="header">
-                        <div class="header-flex">
-                            <span>Nazwisko</span>
-                            <div class="sort-controls">
-                                <h:commandButton value="▾" styleClass="icon-btn small">
-                                    <f:ajax listener="#{newJSFManagedBeanSession.sortAsc}" render="@form"/>
+                        <h:column>
+                            <f:facet name="header">
+                                <div class="header-flex">
+                                    <span>Nazwisko</span>
+                                    <div class="sort-controls">
+                                        <h:commandButton value="▾" styleClass="icon-btn small">
+                                            <f:ajax listener="#{newJSFManagedBeanSession.sortAsc}" render="@form"/>
+                                        </h:commandButton>
+                                        <h:commandButton value="▴" styleClass="icon-btn small">
+                                            <f:ajax listener="#{newJSFManagedBeanSession.sortDesc}" render="@form"/>
+                                        </h:commandButton>
+                                    </div>
+                                </div>
+                            </f:facet>
+
+                            <h:inputText value="#{userToList.nazwisko}" rendered="#{userToList.edited}" styleClass="cell-input"/>
+                            <h:outputText value="#{userToList.nazwisko}" rendered="#{not userToList.edited}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Imię</f:facet>
+                            <h:inputText value="#{userToList.imie}" rendered="#{userToList.edited}" styleClass="cell-input"/>
+                            <h:outputText value="#{userToList.imie}" rendered="#{not userToList.edited}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Opcje</f:facet>
+
+                            <div class="action-buttons">
+                                <h:selectBooleanCheckbox value="#{userToList.edited}">
+                                    <f:ajax listener="#{newJSFManagedBeanSession.visibleChange(userToList)}"
+                                            execute="@this" render="@form"/>
+                                </h:selectBooleanCheckbox>
+
+                                <h:commandButton value="+" styleClass="icon-btn add-btn">
+                                    <f:ajax listener="#{newJSFManagedBeanSession.addRow(userToList)}"
+                                            execute="@form" render="@form"/>
                                 </h:commandButton>
-                                <h:commandButton value="▴" styleClass="icon-btn small">
-                                    <f:ajax listener="#{newJSFManagedBeanSession.sortDesc}" render="@form"/>
+
+                                <h:commandButton value="–" styleClass="icon-btn del-btn">
+                                    <f:ajax listener="#{newJSFManagedBeanSession.deleteRow(userToList)}"
+                                            execute="@form" render="@form"/>
                                 </h:commandButton>
                             </div>
-                        </div>
-                    </f:facet>
 
-                    <h:inputText value="#{userToList.nazwisko}" rendered="#{userToList.edited}" styleClass="cell-input"/>
-                    <h:outputText value="#{userToList.nazwisko}" rendered="#{not userToList.edited}"/>
-                </h:column>
+                        </h:column>
 
-                <h:column>
-                    <f:facet name="header">Imię</f:facet>
-                    <h:inputText value="#{userToList.imie}" rendered="#{userToList.edited}" styleClass="cell-input"/>
-                    <h:outputText value="#{userToList.imie}" rendered="#{not userToList.edited}"/>
-                </h:column>
+                    </h:dataTable>
 
-                <h:column>
-                    <f:facet name="header">Opcje</f:facet>
+                </div>
 
-                    <div class="action-buttons">
-                        <h:selectBooleanCheckbox value="#{userToList.edited}">
-                            <f:ajax listener="#{newJSFManagedBeanSession.visibleChange(userToList)}"
-                                    execute="@this" render="@form"/>
-                        </h:selectBooleanCheckbox>
+                <h:messages styleClass="error-msg"/>
 
-                        <h:commandButton value="+" styleClass="icon-btn add-btn">
-                            <f:ajax listener="#{newJSFManagedBeanSession.addRow(userToList)}"
-                                    execute="@form" render="@form"/>
-                        </h:commandButton>
+                <div class="actions-bottom">
+                    <h:commandButton value="Odśwież" styleClass="panel-link"
+                                     action="#{newJSFManagedBeanSession.refreshData()}"/>
+                    <h:button outcome="/views/index.xhtml" value="Powrót" styleClass="panel-link"/>
+                </div>
 
-                        <h:commandButton value="–" styleClass="icon-btn del-btn">
-                            <f:ajax listener="#{newJSFManagedBeanSession.deleteRow(userToList)}"
-                                    execute="@form" render="@form"/>
-                        </h:commandButton>
-                    </div>
-
-                </h:column>
-
-            </h:dataTable>
+            </h:form>
 
         </div>
 
-        <h:messages styleClass="error-msg"/>
-
-        <div class="actions-bottom">
-            <h:commandButton value="Odśwież" styleClass="panel-link"
-                             action="#{newJSFManagedBeanSession.refreshData()}"/>
-            <h:button outcome="/views/index.xhtml" value="Powrót" styleClass="panel-link"/>
-        </div>
-
-    </h:form>
-
-</div>
-
-</h:body>
+    </h:body>
 </html>
